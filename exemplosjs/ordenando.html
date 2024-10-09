@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenando</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">Ordenando Valores</h1>
+    <div class="form-group">
+        <label>Valor</label>
+        <input type="number" id="valor" class="form-control mb-2">
+        <button onclick="add()" class="btn btn-primary mt-2 mb-1">Adicionar</button>
+    </div>
+    <hr>
+    <div class="form-group">
+        <label for="sortedMethod">Método de Ordenação</label>
+        <select id="sortedMethod" class="form-control mb-3">
+            <option selected>Bubble Sort</option>
+            <option>Selection Sort</option>
+            <option>Quick Sort</option>
+        </select>
+        <button onclick="ordenar()" class="btn btn-primary mt-2 mr-2">Ordenar</button>
+        <button onclick="misturar()" class="btn btn-primary mt-2">Misturar</button>
+    </div>
+    <hr>
+    <h2 class="mt-4">Lista de Valores</h2>
+    <ul id="valores"></ul>
+    <script>
+        let array = [];
+
+        // Função para adicionar itens ao array
+        function add() {
+            const valor = eval(document.getElementById("valor").value);
+            const lista = document.getElementById("valores");
+
+            var node = document.createElement("li");
+            node.textContent = valor;
+            lista.appendChild(node);
+            array.push(valor);
+            document.getElementById("valor").value = '';
+        };
+
+        // Função para seleção do metodo de ordenação e ordenação dos arrays
+        function ordenar() {
+            const lista = document.getElementById("valores");
+            const sortedMethod = document.getElementById("sortedMethod");
+            const arrayDesordenado = Array.from(lista.children).map(node => eval(node.innerHTML));
+
+            switch (sortedMethod.selectedIndex) {
+                case 0:
+                    bubbleSort(arrayDesordenado);
+                    break;
+                case 1:
+                    selectionSort(arrayDesordenado);
+                    break;
+                case 2:
+                    quickSort(arrayDesordenado);
+                        break;
+                default:
+                    break;     
+            }
+            lista.innerHTML = arrayDesordenado.map(value => `<li>${value}</li>`).reduce((acc,item) => acc + item, '');
+
+        };
+
+        function misturar() {
+            const lista = document.getElementById("valores");
+            const arrayOrdenado = Array.from(lista.children).map(node => eval(node.innerHTML));
+            shuffle(arrayOrdenado);
+            lista.innerHTML = arrayOrdenado.map(value => `<li>${value}</li>`).reduce((acc,item) => acc + item, '');
+        };
+    </script>
+    <script src="ordenando.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

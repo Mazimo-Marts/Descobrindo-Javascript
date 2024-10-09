@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Catálogo de Receitas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Ícone da página -->
+    <link rel="shortcut icon" href="imgs/icon-receitas.png" type="image/x-icon"/>
+    <style>
+        /* Definindo uma altura fixa para a lista de ingredientes */
+        .ingredientes-list {
+            min-height: 150px;
+            max-height: 150px;
+            overflow-y: auto;
+        }        
+        
+        /* Definindo tamanho uniforme para as imagens */
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body class="container-fluid bg-warning" onload="preencheCatalogo()">
+    <div class="container-fluid">
+        <h1 class="text-left mt-4 ml-2" style="font-size: 50px;">Catálogo de Receitas</h1>
+
+        <div class="d-flex flex-wrap justify-content-center m-5" id="pnlCatalogo">
+            <!-- Receitas são adicionadas aqui -->
+        </div>
+    </div>
+    
+    <script>
+        const receitas = [
+            {
+                titulo: "Arroz com Couve-Flor",
+                imagem: "imgs/arroz-de-couve-flor.webp",
+                preparo: "Deixe a couve-flor picada. Adicione os ingredientes e refogue bem. Adicione sal, tampe a panela e deixe cozinhar.",
+                ingredientes: [
+                    "Arroz",
+                    "Couve-Flor",
+                    "Cebola Média",
+                    "Azeite"
+                ]
+            },
+            {
+                titulo: "Bolo de Café",
+                imagem: "imgs/bolo-de-cafe.webp",
+                preparo: "Bata o açúcar, as gemas e o café. Adicione farinha e chocolate e mexa bem. Bata as claras e junte à mistura.",
+                ingredientes: [
+                    "Farinha de Trigo",
+                    "Açúcar",
+                    "Café Coado",
+                    "Chocolate em Pó",
+                    "Ovos"
+                ]
+            },
+            {
+                titulo: "Coxinha de Brigadeiro",
+                imagem: "imgs/brigadeiro-morango.webp",
+                preparo: "Junte o leite condensado, chocolate em pó e manteiga. Aqueça no fogo baixo. Envolva os morangos e passe no granulado.",
+                ingredientes: [
+                    "Leite Condensado",
+                    "Chocolate em Pó",
+                    "Manteiga",
+                    "Morango",
+                    "Chocolate Granulado"
+                ]
+            },
+            {
+                titulo: "Espaguete à Carbonara",
+                imagem: "imgs/carbonara.webp",
+                preparo: "Cozinhe o espaguete. Frite o bacon até crocante. Bata os ovos e a gema com parmesão. Misture tudo e adicione sal a gosto.",
+                ingredientes: [
+                    "Espaguete",
+                    "Bacon",
+                    "Ovos",
+                    "Gema de Ovo",
+                    "Parmesão"
+                ]
+            },
+            {
+                titulo: "Salada Ceaser",
+                imagem: "imgs/salada-ceaser.webp",
+                preparo: "Misture a alface os croutons e o parmesão ralado em uma tijela e adicione o molho.",
+                ingredientes: [
+                    "Alface Romana",
+                    "Croutons",
+                    "Parmesão",
+                    "Molho Ceaser"           
+                ]
+            },
+            {
+                titulo: "Panqueca Americana",
+                imagem: "imgs/panqueca-americana.webp",
+                preparo: "Misture os ingredientes secos. Adicione os ingredientes líquidos. Cozinhe a massa da panqueca.",
+                ingredientes: [
+                    "Farinha de Trigo",
+                    "Ovo",
+                    "Leite",
+                    "Açúcar",
+                    "Fermento em Pó",
+                    "Sal",
+                ]
+            }
+        ];
+
+        function getListaIngredientes(receita) {
+            let lista = '<ul class="ingredientes-lista">'
+            lista += receita.ingredientes
+                     .map(ingrediente => `<li>${ingrediente}</li>`)
+                     .reduce((acc, item) => acc + item, '');
+            lista += '</ul>';
+            return lista;
+        };
+
+        function getCard(receita) {
+            return `
+                <div class="card m-2" style="width: 250px;">
+                    <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                    <div class="card-body">
+                        <h5 class="card-title">${receita.titulo}</h5>
+                        <div class="card-text">
+                            ${getListaIngredientes(receita)}
+                            <hr>
+                            <p>${receita.preparo}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        function preencheCatalogo() {
+            const catalogo = document.getElementById("pnlCatalogo");
+            const card = receitas.map(receita => getCard(receita)).reduce((acc, card) => acc+ card, '');
+            catalogo.innerHTML = card;
+        };
+    </script>
+</body>
+</html>
